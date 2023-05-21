@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Grade Prediction System-Developed by simon tamang</title>
+    <link rel="stylesheet" href="ui.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" integrity="sha512-iecdLmaskl7CVkqkXNQ/ZH/XLlvWZOJyj7Yy7tcenmpD1ypASozpmT/E0iPtmFIB46ZmdtAc9eNBvH0H/ZpiBw==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+    
+</head>
+<body>
+<div class="navbar">
+  <div class=" flex">
+    <h1 class="logo"> <a href="ui.html">Grade Predict</a></h1>
+     
+	
+	<nav>
+        <ul>
+          <li> <a href="ui.html">Home</a></li>
+          <li> <a href="features.html">Features</a></li>
+          <li> <a href="dash.html">Document</a></li>
+         
+        </ul>
+      </nav>
+   
+  </div>
+</div>
+
+<div class="thisiscontainer" id="container">
+	<div class="form1 sign-up-container">
+		
+		<form action="/register" method="POST" id="registrationForm" >
+			<h1 class="heading">Create Account</h1>
+			<div class="social-container">
+				<a href="#" class="social"><i class="fab fa-facebook-f"></i></a>
+				<a href="#" class="social"><i class="fab fa-google-plus-g"></i></a>
+				<a href="#" class="social"><i class="fab fa-linkedin-in"></i></a>
+			</div>
+			
+		    <span>or use your email for registration</span>
+			<input type="text" placeholder="Name" id="name" name="name"/>
+			<input type="email" placeholder="Email" id="email" name="email"/>
+			<input type="password" placeholder="Password" id="password" name="password"/>
+			<input type="confirmpassword" placeholder="ConfirmPassword" id="conpassword" name="conpassword"/>
+			<button id="signup" type="submit" onclick="return validateForm()">Sign Up</button>	
+		</form>
+
+	</div>
+	<script>
+		function validateLoginForm() {
+			var email = document.getElementById("email2").value;
+			var password = document.getElementById("password2").value;
+		  
+			// Check if the email field is empty
+			if (email.trim() === '') {
+			  var errorMessage = document.getElementById("errorMessage");
+			  errorMessage.textContent = "Please enter your email address.";
+			  errorMessage.style.display = "block";
+			  return false; // Prevent form submission
+			}
+		  
+			// Check if the password field is empty
+			if (password.trim() === '') {
+			  var errorMessage = document.getElementById("errorMessage");
+			  errorMessage.textContent = "Please enter your password.";
+			  errorMessage.style.display = "block";
+			  return false; // Prevent form submission
+			}
+		  
+			// Make an AJAX request to the server to validate the credentials
+			var xhr = new XMLHttpRequest();
+			xhr.open("POST", "/login", true);
+			xhr.setRequestHeader("Content-Type", "application/json");
+		  
+			xhr.onreadystatechange = function () {
+			  if (xhr.readyState === 4) {
+				if (xhr.status === 200) {
+				  // The credentials are valid, redirect to the dashboard
+				  window.location.href = "/dashboard";
+				} else {
+				  // Show error message on the form
+				  var errorMessage = document.getElementById("errorMessage");
+				  errorMessage.textContent = "Incorrect email or password.";
+				  errorMessage.style.display = "block";
+				  document.getElementById("email2").value = ""; // Clear the email field
+				  document.getElementById("password2").value = ""; // Clear the password field
+				}
+			  }
+			};
+		  
+			var data = JSON.stringify({ email2: email, password2: password });
+			xhr.send(data);
+		  
+			return false; // Prevent form submission until the server response is received
+		  }
+		  
+		</script>
+	<div class="form2 sign-in-container">
+		<form  id="loginForm" action="/login" method="post">
+			<h1 class="heading">Sign in</h1>
+			<div class="social-container">
+				<a href="#" class="social"><i class="fab fa-facebook-f"></i></a>	
+				<a href="#" class="social"><i class="fab fa-google-plus-g"></i></a>
+				<a href="#" class="social"><i class="fab fa-linkedin-in"></i></a>
+			</div>
+			<span>or use your account</span>
+			<input type="email" placeholder="Email"  id="email2" name="email2"/>
+			<input type="password" placeholder="Password" id="password2" name="password2"/>
+			<p id="errorMessage" style="color: red; display: none;">Incorrect email or password.</p>
+			<a href="#">Forgot your password?</a>
+			<button type="submit" onclick=" return validateLoginForm()">Sign In</button>
+		</form>
+	</div>
+	
+	<div class="overlay-container">
+		<div class="overlay">
+			<div class="overlay-panel overlay-left">
+				<h1>Welcome Back!</h1>
+				<p>To keep connected with us please login with your personal info</p>
+				<button class="ghost" id="signIn">Sign In</button>
+			</div>
+			<div class="overlay-panel overlay-right">
+				<h1>Hello, Friend!</h1>
+				<p>Enter your personal details and start journey with us</p>
+				<button class="ghost" id="signUp">Sign Up</button>
+			</div>
+		</div>
+	</div>
+</div>
+
+
+
+
+<!-- <footer>
+	<p>
+    Simon Tamang
+  </p>
+</footer> -->
+
+
+
+
+
+<script src="appp.js"></script>
+</body>
+</html>
