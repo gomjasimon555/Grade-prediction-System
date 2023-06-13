@@ -7,7 +7,7 @@
     <title>Grade Prediction System-Developed by simon tamang</title>
     <link rel="stylesheet" href="ui.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" integrity="sha512-iecdLmaskl7CVkqkXNQ/ZH/XLlvWZOJyj7Yy7tcenmpD1ypASozpmT/E0iPtmFIB46ZmdtAc9eNBvH0H/ZpiBw==" crossorigin="anonymous" referrerpolicy="no-referrer" />
-    
+
 </head>
 <body>
 <div class="navbar">
@@ -43,59 +43,50 @@
 			<input type="email" placeholder="Email" id="email" name="email"/>
 			<input type="password" placeholder="Password" id="password" name="password"/>
 			<input type="confirmpassword" placeholder="ConfirmPassword" id="conpassword" name="conpassword"/>
-			<button id="signup" type="submit" onclick="return validateForm()">Sign Up</button>	
+			<button id="signup" type="submit" onclick="return validateLoginForm()">Sign Up</button>	
 		</form>
 
 	</div>
 	<script>
 		function validateLoginForm() {
-			var email = document.getElementById("email2").value;
-			var password = document.getElementById("password2").value;
-		  
-			// Check if the email field is empty
-			if (email.trim() === '') {
-			  var errorMessage = document.getElementById("errorMessage");
-			  errorMessage.textContent = "Please enter your email address.";
-			  errorMessage.style.display = "block";
-			  return false; // Prevent form submission
-			}
-		  
-			// Check if the password field is empty
-			if (password.trim() === '') {
-			  var errorMessage = document.getElementById("errorMessage");
-			  errorMessage.textContent = "Please enter your password.";
-			  errorMessage.style.display = "block";
-			  return false; // Prevent form submission
-			}
-		  
-			// Make an AJAX request to the server to validate the credentials
-			var xhr = new XMLHttpRequest();
-			xhr.open("POST", "/login", true);
-			xhr.setRequestHeader("Content-Type", "application/json");
-		  
-			xhr.onreadystatechange = function () {
-			  if (xhr.readyState === 4) {
-				if (xhr.status === 200) {
-				  // The credentials are valid, redirect to the dashboard
-				  window.location.href = "/dashboard";
-				} else {
-				  // Show error message on the form
-				  var errorMessage = document.getElementById("errorMessage");
-				  errorMessage.textContent = "Incorrect email or password.";
-				  errorMessage.style.display = "block";
-				  document.getElementById("email2").value = ""; // Clear the email field
-				  document.getElementById("password2").value = ""; // Clear the password field
-				}
-			  }
-			};
-		  
-			var data = JSON.stringify({ email2: email, password2: password });
-			xhr.send(data);
-		  
-			return false; // Prevent form submission until the server response is received
+		  var email = document.getElementById("email2").value;
+		  var password = document.getElementById("password2").value;
+		  var errorMessage = document.getElementById("errorMessage");
+		
+		  // Reset error message display
+		  errorMessage.style.display = "none";
+		  errorMessage.textContent = "";
+		
+		  // Check if the email field is empty
+		  if (email.trim() === "") {
+			errorMessage.textContent = "Please enter your email address.";
+			errorMessage.style.display = "block";
+			return false; // Prevent form submission
 		  }
-		  
+		
+		  // Check if the email is valid using a regular expression
+		  var emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+		  if (!emailRegex.test(email)) {
+			errorMessage.textContent = "Please enter a valid email address.";
+			errorMessage.style.display = "block";
+			return false; // Prevent form submission
+		  }
+		
+		  // Check if the password field is empty
+		  if (password.trim() === "") {
+			errorMessage.textContent = "Please enter your password.";
+			errorMessage.style.display = "block";
+			return false; // Prevent form submission
+		  }
+		
+		  // Add additional password validation checks if needed
+		
+		  return true; // Allow form submission
+		}
 		</script>
+		
+	  
+		
 	<div class="form2 sign-in-container">
 		<form  id="loginForm" action="/login" method="post">
 			<h1 class="heading">Sign in</h1>
@@ -105,8 +96,8 @@
 				<a href="#" class="social"><i class="fab fa-linkedin-in"></i></a>
 			</div>
 			<span>or use your account</span>
-			<input type="email" placeholder="Email"  id="email2" name="email2"/>
-			<input type="password" placeholder="Password" id="password2" name="password2"/>
+			<input type="email" placeholder="Email"  id="email2" name="email"/>
+			<input type="password" placeholder="Password" id="password2" name="password"/>
 			<p id="errorMessage" style="color: red; display: none;">Incorrect email or password.</p>
 			<a href="#">Forgot your password?</a>
 			<button type="submit" onclick=" return validateLoginForm()">Sign In</button>
